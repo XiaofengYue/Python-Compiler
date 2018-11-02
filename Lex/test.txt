@@ -19,3 +19,5 @@ if (!n) b = b+c;
 /*The loop ended
 write abc;
 }
+if (!n) b = b+c;
+int A$@;

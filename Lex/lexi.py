@@ -17,7 +17,7 @@ def readRules(filename):
                 rules.append(arr)
 
                 # 可以接受other(可以接受空格)的存放起来在spaces中
-                if arr[-1] != '#' and arr[:-1] != 'other':
+                if arr[-1] != '#' and arr[-1] != 'other':
                     spaces.append(index)
                 index += 1
             # 弹出最后一个终态合集
@@ -55,7 +55,7 @@ def sonsOfAlphas(str):
 
 tplt = "{0:^10}|{1:{3}^10}|{2:{3}^10}"
 
-#前面的数字代表对应的终态
+# 前面的数字代表对应的终态
 dic = {2: '标志符',
        3: '无符号整数',
        4: '无符号整数',
@@ -67,6 +67,8 @@ dic = {2: '标志符',
        13: '错误'}
 
 # 根据目前状态和字符查找下一状态
+
+
 def findNextState(nowState, ch):
     # 最后一个是other 单独处理
     for i in range(1, len(rules[0]) - 1):
@@ -95,38 +97,41 @@ def findNextState(nowState, ch):
 # 分析字符串
 
 
-def analyse(string):
-    nowState = 1
+def analyse(input_string):
+    pos = 0
+    now_state = 1
     str_acc = ''
-    index = 0
-    while index < len(string):
-        if (string[index] == ' ' and nowState not in space_ac) or index == len(string):
-            if nowState in finalStates:
-                print(tplt.format(nowLine, dic[nowState], str_acc, chr(12288)))
+    while pos < len(input_string):
+        if (input_string[pos] == ' ' and now_state not in space_ac) or pos == len(input_string):
+            if now_state in finalStates:
+                print(tplt.format(nowLine, dic[now_state], str_acc, chr(12288)))
             else:
                 print(tplt.format(nowLine, '失败', str_acc, chr(12288)))
-            nowState = 1
+            now_state = 1
             str_acc = ''
         else:
-            # 下一个字符是否能够跳转到一个合法的状态
-            if findNextState(nowState, string[index]):
-                str_acc += string[index]
-                nowState = findNextState(nowState, string[index])
-            # 不能跳转，则判断前面的字符是否合法
+            next_state = findNextState(now_state, input_string[pos])
+            # 能跳到合法状态
+            if next_state:
+                str_acc += input_string[pos]
+                now_state = next_state
             else:
-                if nowState in finalStates:
-                    print(tplt.format(nowLine, dic[nowState], str_acc, chr(12288)))
-                    index -= 1
-                elif string[index] != ' ':
-                    str_acc += string[index]
+                # 上一个是终态
+                if now_state in finalStates:
+                    print(tplt.format(nowLine, dic[now_state], str_acc, chr(12288)))
+                    pos -= 1
+                elif now_state == 1:
+                    str_acc += input_string[pos]
                     print(tplt.format(nowLine, '失败', str_acc, chr(12288)))
-                nowState = 1
+                else:
+                    print(tplt.format(nowLine, '失败', str_acc, chr(12288)))
+                    pos -= 1
                 str_acc = ''
-        index += 1
-
-    if nowState in finalStates:
-        print(tplt.format(nowLine, dic[nowState], str_acc, chr(12288)))
-    elif nowState != 1:
+                now_state = 1
+        pos += 1
+    if now_state in finalStates:
+        print(tplt.format(nowLine, dic[now_state], str_acc, chr(12288)))
+    elif now_state != 1:
         print(tplt.format(nowLine, '失败', str_acc, chr(12288)))
 
 
@@ -143,8 +148,8 @@ if __name__ == '__main__':
         for line in f.readlines():
             nowLine += 1
             print('\n\n-------------------------------------------------')
-            print('识别语句:' + line[0:-1])
+            print('识别语句:' + line[0: -1])
             print('-------------------------------------------------')
             print(tplt.format('line ', '识别状态', 'content', chr(12288)))
-            analyse(line[0:-1])
+            analyse(line[0: -1])
             print('-------------------------------------------------')
