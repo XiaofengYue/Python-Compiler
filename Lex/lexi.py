@@ -84,6 +84,7 @@ def findNextState(nowState, ch):
                 return False
     # 返回符合other的状态
     if rules[nowState][len(rules[0]) - 1] != '#':
+        # 返回nextState
         return int(rules[nowState][len(rules[0]) - 1])
 
     return False
