@@ -66,3 +66,43 @@ read	read	9
 16) < term > → < term >*<factor>|< term >/<factor>|< factor >
 17) < factor > → (<arithmetic_expression>)|ID|NUM
 ```
+## 构造LL(1)文法
+### 前期准备
+```
+S <program>
+A <declaration_list>
+B <declaration_stat>
+C <statement_list>
+D <statement>
+E <if_stat>
+F <while_stat>
+G <for_stat>
+H <write_stat>
+I <read_stat>
+J <compound_stat>
+K <assignment_expression>
+L <assignment_stat>
+M <bool_expression>
+N <arithmetic_expression>
+O <term>
+P <factor>
+
+#将语法规则符号化
+1) S → 13 AC 14
+2) A → AB|ε
+3) B → 7 2 12
+4) C → CD|ε
+5) D → E|F|G|I|H|J|L|12
+6) E → 3 10 M 11 D | 3 10 M 11 D 4 D
+7) F → 6 10 M 11 D
+8) G → 5 10 K 12 M 12 K 11 D
+9) H → 8 N 12
+10) I → 9 2 12
+11) J → 13 C 14
+12) K → 2 20 N
+13) L → K 12
+14) M → N 21 N | N 22 N | N 23 N | N 24 N | N 26 N | N 25 N
+15) N → N 16 O | N 17 O | O
+16) O → O 18 P | O 19 P | P
+17) P → 10 N 11 | 1 | 2
+```
