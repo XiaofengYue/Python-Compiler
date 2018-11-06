@@ -9,4 +9,4 @@
 6、注释符:/* */
 ```
 ## 自动机状态转换图
-![Image text](https://github.com/XiaofengYue/Python-Compiler/edit/master/img-foler/自动机.png)
+![Image text](https://github.com/XiaofengYue/Python-Compiler/blob/master/img-folder/%E8%87%AA%E5%8A%A8%E6%9C%BA.png)
