@@ -52,7 +52,7 @@ tplt = "{0:^10}|{1:{3}^10}|{2:{3}^10}"
 # 保留字
 reserved = ['if', 'else', 'for', 'while', 'int', 'write', 'read']
 # 类别分析
-dic = {'NUM':0,'ID':1,'if':2,'else':3,'for':4,'while':5,'int':6,'write':7,'read':8,'(':9,')':10,';':11,'{':12,'}':13,',':14,'+':15,'-':16,'*':17,'/':18,'=':19,'>':20,'<':21,'>=':22,'<=':23,'!=':24,'==':25,'注释':26}
+dic = {'NUM':1,'ID':2,'if':3,'else':4,'for':5,'while':6,'int':7,'write':8,'read':9,'(':10,')':11,';':12,'{':13,'}':14,',':15,'+':16,'-':17,'*':18,'/':19,'=':20,'>':21,'<':22,'>=':23,'<=':24,'!=':25,'==':26,'注释':27}
 
 
 def writeIn(str_acc, now_state):
@@ -65,7 +65,7 @@ def writeIn(str_acc, now_state):
             name = '注释'
         else:
             name = str_acc
-        f.write(str_acc + '\t' + str(dic[name]) + '\n')
+        f.write(str(dic[name]) + '\t' + str_acc + '\n')
 # 根据目前状态和字符查找下一状态
 
 
@@ -101,7 +101,7 @@ def analyse(input_string):
             if now_state in finalStates:
                 writeIn(str_acc, now_state)
             else:
-                print(tplt.format(1, '失败', str_acc, chr(12288)))
+                print(tplt.format(100, '失败', str_acc, chr(12288)))
             # 状态和接收字符串置为初始态和空
             now_state = 1
             str_acc = ''
@@ -114,7 +114,7 @@ def analyse(input_string):
                     break
                 # 忽略空格和回车的报错（他们仅仅是为了格式）
                 elif ch != ' ' and ord(ch) != 10:
-                    print(tplt.format(100p, '失败', ch, chr(12288)))
+                    print(tplt.format(100, '失败', ch, chr(12288)))
                 index += 1
                 ch = input_string[index]
         index += 1
