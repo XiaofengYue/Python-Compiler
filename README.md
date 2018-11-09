@@ -88,44 +88,44 @@ O <term>
 P <factor>
 
 #将语法规则符号化
-1) S → 13 AC 14
+1) S → m AC n
 2) A → AB|ε
-3) B → 7 2 12
+3) B → g b l
 4) C → CD|ε
-5) D → E|F|G|I|H|J|L|12
-6) E → 3 10 M 11 D | 3 10 M 11 D 4 D
-7) F → 6 10 M 11 D
-8) G → 5 10 K 12 M 12 K 11 D
-9) H → 8 N 12
-10) I → 9 2 12
-11) J → 13 C 14
-12) K → 2 20 N
-13) L → K 12
-14) M → N 21 N | N 22 N | N 23 N | N 24 N | N 26 N | N 25 N
-15) N → N 16 O | N 17 O | O
-16) O → O 18 P | O 19 P | P
-17) P → 10 N 11 | 1 | 2
+5) D → E|F|G|I|H|J|L|l
+6) E → c j M k D | c j M k D d D
+7) F → f j M k D
+8) G → e j K l M l K k D
+9) H → h N l
+10) I → i b l
+11) J → m C n
+12) K → b t N
+13) L → K l
+14) M → N u N | N v N | N w N | N x N | N z N | N y N
+15) N → N p O | N q O | O
+16) O → O r P | O s P | P
+17) P → j N k | a | b
 
 #提取左公因子、消除左递归
-1) S → 13 AC 14
+1) S → m AC n
 2) A → BA|ε
-3) B → 7 2 12
+3) B → g b l
 4) C → DC|ε
-5) D → E|F|G|I|H|J|L|12
-6) E → 3 10 M 11 D e
-   e → 4 D | ε
-7) F → 6 10 M 11 D
-8) G → 5 10 K 12 M 12 K 11 D
-9) H → 8 N 12
-10) I → 9 2 12
-11) J → 13 C 14
-12) K → 2 20 N
-13) L → K 12
+5) D → E|F|G|I|H|J|L|l
+6) E → c j M k D e
+   e → d D | ε
+7) F → f j M k D
+8) G → e j K l M l K k D
+9) H → h N l
+10) I → i b l
+11) J → m C n
+12) K → b t N
+13) L → K l
 14) M → N m
-    m → 21 N | 22 N | 23 N | 24 N | 26 N | 25 N
+    m → u N | v N | w N | x N | z N | y N
 15) N → O n
-    n → 16 O n | 17 O n | ε
+    n → p O n | q O n | ε
 16) O → P o
-    o → 18 P o | 19 P o | ε 
-17) P → 10 N 11 | 1 | 2
+    o → r P o | s P o | ε 
+17) P → j N k | a | b
 ```
