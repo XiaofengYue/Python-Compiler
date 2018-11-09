@@ -1,0 +1,6 @@
+0	i	+	*	(	)	#
+E	E-Te			E-Te		
+e		e-+Te			e-	e-
+T	T-Ft			T-Ft		
+t		t-	t-*Ft		t-	t-
+F	F-i			F-(E)		

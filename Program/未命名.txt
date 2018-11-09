@@ -1,28 +1,0 @@
-
-1) <program> → {<declaration_list><statement_list>}
-	申明属性列表 	int num1;int num2;int num3;2) <declaration_list> → <declaration_list><declaration_stat> | ε
-	申明属性		int num1;
-3) <declaration_stat> → int ID;4) <statement_list> → <statement_list><statement>| ε
-
-	语句 = if while for read write compound(复合) assignment(分配，任务)5) <statement> → <if_stat>|<while_stat>|<for_stat>|<read_stat>|<write_stat>|<compound_stat> |<assignment_stat>|;
-
-	if语句 = if(<真假表达式>)<语句> | if(<真假表达式>)<语句>else<语句>6) <if_stat> → if (<bool_expression >) <statement >| if (<bool_expression>) <statement >else < statement >
-
-	while语句 = while(<真假表达式>)<语句>7) <while_stat> → while (<bool_expression>) < statement >
-
-	for语句 = for(<任务表达式>;<真假表达式>;<任务表达式>)<语句>8) <for_stat> → for (<assignment_expression>; <bool_expression>;<assignment_ expression >)<statement>
-
-	write语句 = write<算数表达式>9) <write_stat> → write < arithmetic_expression >;
-
-	read语句 = read ID;10) <read_stat> → read ID;
-
-	复合语句 = {申明语句列表}11) <compound_stat> → {<statement_list>}
-
-	任务分配表达式 = ID=<算数表达式>12) <assignment_expression> → ID=<arithmetic_expression>
-
-	任务分配语句 = <任务分配表达式>13) <assignment_stat> →<assignment_expression>;
-
-	真假表达式 = <算数表达式> > <算数表达式> | <算数表达式> < <算数表达式> | <算数表达式> >= <算数表达式> | <算数表达式> <= <算数表达式>
-			| <算数表达式>== <算数表达式> | <算数表达式> != <算数表达式>14) <bool_expression>→<arithmetic_expression> > <arithmetic_expression>|<arithmetic_expression> < <arithmetic_expression> |<arithmetic_expression> >= <arithmetic_expression> |<arithmetic_expression> <= <arithmetic_expression> |<arithmetic_expression> == <arithmetic_expression> |<arithmetic_expression> != <arithmetic_expression>	算数表达式 = <算数表达式> + <term> | <算数表达式> - <term> | <term>15) <arithmetic_expression> → <arithmetic_expression>+<term> |< arithmetic_expression>-<term>|< term >
-	<term> = <term>*<因子> | <term>/<因子> | <因子>16) < term > → < term >*<factor>|< term >/<factor>|< factor >
-	<因子> = <算数表达式> | ID | NUM17) < factor > → (<arithmetic_expression>)|ID|NUM
