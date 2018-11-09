@@ -13,32 +13,32 @@
 ## 单词分类方案
 ```
 输入	分类	类别码
-数字 NUM	1
-字母开头后接任意字母或数字（保留字除外）	ID 2
-if	if	3
-else	else	4
-for	for	5
-while	while	6
-int	int	7
-write	write	8
-read	read	9
-（	（	10
-）	）	11
-；	；	12
-｛	｛	13
-｝	｝	14
-，	，	15
-＋	＋	16
-－	－	17
-＊	＊	18
-／	／	19
-＝	＝	20
-＞	＞	21
-＜	＜	22
-＞＝	＞＝	23
-＜＝	＜＝	24
-！＝	！＝	25
-＝＝	＝＝	26
+数字 NUM	a
+字母开头后接任意字母或数字（保留字除外）	ID b
+if	if	c
+else	else	d
+for	for	e
+while	while	f
+int	int	g
+write	write	h
+read	read	i
+（	（	j
+）	）	k
+；	；	l
+｛	｛	m
+｝	｝	n
+，	，	o
+＋	＋	p
+－	－	q
+＊	＊	r
+／	／	s
+＝	＝	t
+＞	＞	u
+＜	＜	v
+＞＝	＞＝	w
+＜＝	＜＝	x
+！＝	！＝	y
+＝＝	＝＝	z
 ／＊　　＊／	注释符	27
 ```
 ## 语法规则
