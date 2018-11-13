@@ -1,0 +1,22 @@
+	a	b	c	d	e	f	g	h	i	j	k	l	m	n	o	p	q	r	s	t	u	v	w	x	y	z	#
+S													S->mACn														S->
+A		A->	A->		A->	A->	A->BA	A->	A->			A->	A->	A->													
+B							B->gbl																				
+C		C->DC	C->DC		C->DC	C->DC		C->DC	C->DC			C->DC	C->DC	C->													
+D		D->L	D->E		D->G	D->F		D->H	D->I			D->l	D->J														
+E			E->cjMkDQ																								
+Q		Q->	Q->	Q->dD	Q->	Q->		Q->	Q->			Q->	Q->	Q->													
+F						F->fjMkD																					
+G					G->ejKlMlKkD																						
+H								H->hNl																			
+I									I->ibl																		
+J													J->mCn														
+K		K->btN																									
+L		L->Kl																									
+M	M->NR	M->NR								M->NR																	
+R																					R->uN	R->vN	R->wN	R->xN	R->yN	R->zN	
+N	N->OT	N->OT								N->OT																	
+T											T->	T->				T->pOT	T->qOT				T->	T->	T->	T->	T->	T->	
+O	O->PU	O->PU								O->PU																	
+U											U->	U->				U->	U->	U->rPU	U->sPU		U->	U->	U->	U->	U->	U->	
+P	P->a	P->b								P->jNk																	
