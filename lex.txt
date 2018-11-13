@@ -6,7 +6,7 @@ g	int
 b	i
 l	;
 g	int
-b	bb
+b	b
 l	;
 g	int
 b	c
@@ -28,6 +28,7 @@ p	+
 a	1
 k	)
 m	{
+l	;
 b	a
 t	=
 b	a
@@ -40,17 +41,19 @@ b	b
 r	*
 b	i
 l	;
+m	{
 b	c
 t	=
 b	a
 p	+
 b	b
 l	;
+n	}
 f	while
 j	(
 b	x
 x	<=
-a	1
+a	10
 k	)
 m	{
 b	C

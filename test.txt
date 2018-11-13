@@ -1,12 +1,13 @@
 {
 int a;
 int i;
-int bb;
+int b;
 int c;
-for (i=1; i <= 10 ; i=i+1) {
-a=a+i; b=b*i; 
+for (i=1; i <= 10 ;i=i+1) {
+; a=a+i ;b=b*i; {
 c=a+b;
-while(x<=1)
+}
+while(x<=10)
 { C=a+b+(x*y);
 if (a>b) {
 read a; }
@@ -17,4 +18,3 @@ write c;
 }
 }
 }
-
