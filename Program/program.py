@@ -26,13 +26,15 @@ def analysize(input_str):
             symbolStack = symbolStack[:-1] + res[::-1][:-3]
             print('符号栈:' + symbolStack)
             while symbolStack[-1] == ch:
-                pos += 1
                 symbolStack = symbolStack[:-1]
                 print('符号栈:' + symbolStack)
+                pos += 1
+                if pos >= len(input_str):
+                    break
                 ch = input_str[pos]
         else:
             print('error')
-    if startSymbol == '':
+    if symbolStack == '':
         print('成功')
     else:
         print('error')
