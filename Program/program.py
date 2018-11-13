@@ -35,6 +35,13 @@ def analysize(input_str):
         print('error')
 
 
+def pro():
+    global rule
+    global startSymbol
+    rule, startSymbol = readRules()
+    analysize('i*i+i#')
+
+
 if __name__ == '__main__':
     global rule
     global startSymbol

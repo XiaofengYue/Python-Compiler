@@ -1,21 +1,19 @@
 {
-/*This a test program.*/
-int abc;
-int 123;
-int A$@;
+int a;
 int i;
-int n;
-int b,c;
-int 2a;
-int a2;
-read n;
-n = 012345;
-for (i=1;i<=n; i= i+1)
+int 2b;
+int c
+for (i=1; i <= 10 i=i+1) {
+; a=a+i b=b*i; {
+c=a+b;
+}
+while(x<=)
+{ C=a+b+(x*y;
+if (a>b) {
+read a; }
+else
 {
-abc=abc+i;
+write b+5; }
+write c
 }
-if(i!=n) n = n+i;
-if (!n) b = b+c;
-/*The loop ended
-write abc;
-}
+
