@@ -123,7 +123,8 @@ def analyse(input_string):
     # 读完字符串后最后需要进行判断
     if now_state in finalStates:
         writeIn(str_acc, now_state)
-    else:
+    elif now_state != 1:
+        print('here')
         print(tplt.format(100, '失败', str_acc, chr(12288)))
 
 
