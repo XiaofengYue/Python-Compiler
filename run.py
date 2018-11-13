@@ -1,4 +1,4 @@
-from Lex.lexi2 import lex
+from Lex.lexi import lex
 from Program import program
 
 

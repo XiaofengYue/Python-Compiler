@@ -128,14 +128,18 @@ def analyse(input_string):
 
 
 def lex(filename):
+    if os.path.exists('lex.txt'):
+        os.remove('lex.txt')
     # 定义全局变量
     global rules
     global finalStates
-    rules, finalStates = readRules('rules.txt')
+    rules, finalStates = readRules('Lex/rules.txt')
     with open(filename) as f:
         analyse(f.read())
 
 if __name__ == '__main__':
+    if os.path.exists('lex.txt'):
+        os.remove('lex.txt')
     # 定义全局变量
     global rules
     global finalStates
