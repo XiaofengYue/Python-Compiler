@@ -14,7 +14,7 @@ def readRules(filename):
                 arr = line.split('\t')
                 rules.append(arr)
 
-            # 弹出最后一个终态合集
+            # 弹出最后一个终态合集\
             states = rules.pop()
             # 解析出所有的终态
             states = ''.join(states)
@@ -124,7 +124,6 @@ def analyse(input_string):
     if now_state in finalStates:
         writeIn(str_acc, now_state)
     elif now_state != 1:
-        print('here')
         print(tplt.format(100, '失败', str_acc, chr(12288)))
 
 
@@ -141,5 +140,5 @@ if __name__ == '__main__':
     global rules
     global finalStates
     rules, finalStates = readRules('rules.txt')
-    with open('test.txt') as f:
+    with open('LexWord.txt') as f:
         analyse(f.read())
