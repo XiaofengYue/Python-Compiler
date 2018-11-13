@@ -23,7 +23,7 @@ def analysize(input_str):
         if ch in rule[symbolStack[-1]]:
             res = rule[symbolStack[-1]][ch]
             # print('识别的结果:' + res)
-            if res == 'Q->dD' and input_str[post+1] == '}':
+            if res == 'Q->dD' and input_str[pos+1] == '}':
                 res = 'Q->'
             symbolStack = symbolStack[:-1] + res[::-1][:-3]
             # print('符号栈:' + symbolStack)
