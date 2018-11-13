@@ -118,7 +118,7 @@ P <factor>
 8) G → e j K l M l K k D
 9) H → h N l
 10) I → i b l
-11) J → R C n
+11) J → m C n
 12) K → b t N
 13) L → K l
 14) M → N R
