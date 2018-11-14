@@ -4,7 +4,7 @@ int i;
 int b;
 int c;
 for (i=1; i <= 10 ;i=i+1) {
-; a=a+i ;b=b*i; {
+; a=a+i; b=b*i; {
 c=a+b;
 }
 while(x<=10)

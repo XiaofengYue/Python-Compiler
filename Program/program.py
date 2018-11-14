@@ -50,6 +50,10 @@ dic = {'NUM':'a','ID':'b','if':'c','else':'d','for':'e','while':'f','int':'g','w
 dic = dict(zip(dic.values(),dic.keys()))
 
 def dealError(code,now,pos, need, rest = ''):
+    if pos < len(map_line):
+        print('出现语法错误的行号:' +str(map_line[pos]))
+    else:
+        print('出现语法错误的行号:最后一行')
     if code == 1:
         print('Expected:    ' + dic[need] + '   Before:    ' + map_list[pos] )
     elif code == 2:
@@ -58,10 +62,12 @@ def dealError(code,now,pos, need, rest = ''):
         print('剩余未识别' + rest)
 
 
-def pro(input_str, m_list):
+def pro(input_str, m_list, line_map):
     global rule
     global startSymbol
     global map_list
+    global map_line
+    map_line = line_map
     map_list = m_list
     rule, startSymbol = readRules()
     analysize(input_str)

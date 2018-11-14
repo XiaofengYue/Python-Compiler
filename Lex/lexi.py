@@ -66,6 +66,7 @@ def writeIn(str_acc, now_state):
         else:
             name = str_acc
         f.write(str(dic[name]) + '\t' + str_acc + '\n')
+        line_map.append(line_count)
 # 根据目前状态和字符查找下一状态
 
 
@@ -88,6 +89,7 @@ def findNextState(nowState, ch):
 
 
 def analyse(input_string):
+    global line_count
     now_state = 1
     str_acc = ''
     index = 0
@@ -115,6 +117,8 @@ def analyse(input_string):
                 # 忽略空格和回车的报错（他们仅仅是为了格式）
                 elif ch != ' ' and ord(ch) != 10:
                     print(tplt.format(100, '失败', ch, chr(12288)))
+                if ord(ch) == 10:
+                    line_count += 1
                 index += 1
                 if index >= len(input_string):
                     break
@@ -133,9 +137,14 @@ def lex(filename):
     # 定义全局变量
     global rules
     global finalStates
+    global line_count
+    global line_map
+    line_map = list()
+    line_count = 1
     rules, finalStates = readRules('Lex/rules.txt')
     with open(filename) as f:
         analyse(f.read())
+    return line_map
 
 if __name__ == '__main__':
     if os.path.exists('lex.txt'):
