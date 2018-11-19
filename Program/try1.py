@@ -1,3 +1,6 @@
+from Program.table import symbolChart
+from Program.table import MyList
+from Program.table import element
 def readRules():
     with open('ll1.txt') as f:
         # 去掉最后的 '\n'
@@ -10,8 +13,43 @@ def readRules():
                 if rule != '' and index != 0:
                     line_dic[ter_list[index]] = rule
             dic[line_list[0]] = line_dic
+        print(dic)
         return dic, 'S'
 
+def yuyi(res):
+    r = Res(res)
+    print(r)
+
+def analy(input_str):
+    symbolStack = MyList()
+    pos = 0
+    while pos < len(input_str):
+        ch = input_str[pos]
+        print('当前字符:' + ch)
+        e = symbolStack.first
+        if ch in rule[e.ele]:
+            res = rule[e.ele][ch]
+            if res == 'Q->dD' and input_str[pos+1] == 'n':
+                res = 'Q->'
+            symbolStack.addRes(res)
+            print(symbolStack)
+            while symbolStack.first.ele == ch:
+                symbolStack.out(map_list[pos])
+                print(symbolStack)
+                pos += 1
+                if pos >= len(input_str):
+                    break
+                ch = input_str[pos]
+            if symbolStack and symbolStack.first.ele not in rule:
+                # print(input_str[pos] + '终结符匹配失败')
+                dealError(1, input_str[pos],pos, symbolStack.first.ele)
+                break
+        else:
+            # print('非终结符里没有这个去处')
+            dealError(2,input_str[pos],pos,symbolStack.first.ele,rest = input_str[pos:])
+            break
+    if len(symbolStack) == 0:
+        print('识别成功')
 
 def analysize(input_str):
     symbolStack = '#' + startSymbol
@@ -22,7 +60,6 @@ def analysize(input_str):
         print('剩下字符' + input_str[pos:])
         if ch in rule[symbolStack[-1]]:
             res = rule[symbolStack[-1]][ch]
-            print('识别的结果:' + res)
             if res == 'Q->dD' and input_str[pos+1] == 'n':
                 res = 'Q->'
             symbolStack = symbolStack[:-1] + res[::-1][:-3]
@@ -72,13 +109,17 @@ def dealError(code,now,pos, need, rest = ''):
 
 def pro(input_str, m_list, line_map):
     global rule
+    # 开始符号S
     global startSymbol
+    # 映射表(根据pos可以得到具体的是什么洗发中的)
     global map_list
+    # 每个符号对应的行数
     global map_line
     map_line = line_map
     map_list = m_list
+    map_list.append('#')
     rule, startSymbol = readRules()
-    analysize(input_str)
+    analy(input_str)
 
 
 if __name__ == '__main__':

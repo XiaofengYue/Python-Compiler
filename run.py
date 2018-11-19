@@ -1,9 +1,11 @@
 from Lex.lexi import lex
 from Program.program import pro
+from Program.try1 import pro as p
+from Program.down import Pro
 
 
 if __name__ == '__main__':
-    line_map = lex('test.txt')
+    map_line = lex('test.txt')
     input_str = ''
     map_list = list()
     with open('lex.txt') as f:
@@ -12,4 +14,8 @@ if __name__ == '__main__':
             if line[0].isalpha():
                 input_str += line[0]
                 map_list.append(line[1])
-    pro(input_str + '#', map_list, line_map)
+    # pro(input_str + '#', map_list, line_map)
+    # p(input_str + '#', map_list, map_line)
+    p = Pro()
+    p.createSymbolList(input_str, map_list, map_line)
+    p.analysis('ll1.txt')

@@ -1,0 +1,7 @@
+N↑t→        O↑p                          T↓p↑t
+T↓p↑t→  +   O↑r @ADD↓p,r,t0              T↓t0↑t             t0 = NEWT 
+T↓p↑t→ε                                              t = p
+O↑t→        P↑p                          U↓p↑t
+U↓p↑t→*     P↑r @MULT↓p,r,t0             U↓t0↑t           t0 = NEWT 
+U↓p↑t→ε                                              t = p
+P↑p →(N↑p) | ID↑p 
