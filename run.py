@@ -1,8 +1,6 @@
 from Lex.lexi import lex
-from Program.program import pro
-from Program.try1 import pro as p
 from Program.down import Pro
-
+from VMachine.vm import VM
 
 if __name__ == '__main__':
     map_line = lex('test.txt')
@@ -19,3 +17,5 @@ if __name__ == '__main__':
     p = Pro()
     p.createSymbolList(input_str, map_list, map_line)
     p.analysis('ll1.txt')
+    # 抽象机
+    vm = VM(p.chart, p.temp_list, p.seq_list)

@@ -4,32 +4,42 @@ class NewT():
         self.value = value
         self.name = 'T' + str(newT_num)
         newT_num += 1
+
     def __str__(self):
         return self.name
+
     def __repr__(self):
         return '\nname:{:10}value:{:5}'.format(self.name,self.value)
+
     def isdigit(self):
         return False
+
 
 class label():
     def __init__(self, value=None):
         self.value = value
+
     def __repr__(self):
         return str(self.value)
+
     def __str__(self):
         return str(self.value)
 
+
 class Sequence():
-    def __init__(self,action,p1= '_',p2 = '_',result=None):
+    def __init__(self,action,p1='_',p2='_',result=None):
         self.action = action
         self.p1 = p1
         self.p2 = p2
         self.result = result
+
     def __str__(self):
         return '{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
+
     def __repr__(self):
         # return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
         return '{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
+
 
 class element():
     def __init__(self, symbol, value, line, type=None):
@@ -39,10 +49,13 @@ class element():
         dic = {'NUM':'a','ID':'b','if':'c','else':'d','for':'e','while':'f','int':'g','write':'h','read':'i','(':'j',')':'k',';':'l','{':'m','}':'n',',':'o','+':'p','-':'q','*':'r','/':'s','=':'t','>':'u','<':'v','>=':'w','<=':'x','!=':'y','==':'z','注释':1,'#':'#'}
         dic = dict(zip(dic.values(),dic.keys()))
         self.type = dic[symbol]
+
     def __str__(self):
         return '\n符号:' + self.symbol + '\t值:' + self.value + '\t行数:' + str(self.line) + '\t类型:' + self.type
+
     def __repr__(self):
         return '\n符号:' + self.symbol + '\t值:' + self.value + '\t行数:' + str(self.line) + '\t类型:' + self.type
+
 
 class MyException(Exception):
     def __init__(self,line,need,now):
@@ -51,6 +64,7 @@ class MyException(Exception):
         self.line = line
         self.need = need
         self.now = now
+
 
 class Pro():
     def __readRules(self,filename):
@@ -75,10 +89,12 @@ class Pro():
         print(self.list)
         # 符号表
         self.chart = dict()
+        # 四元式表
         self.seq_list = list()
         self.seq_num = 0
         global newT_num
         newT_num = 0
+        # 临时变量表
         self.temp_list = list()
 
     def analysis(self, filename):
@@ -110,15 +126,15 @@ class Pro():
         elif op == '/':
             return p1 // p2
         elif op == '>':
-            if p1>p2:
+            if p1 > p2:
                 return 1
             return 0
         elif op == '<':
-            if p1<p2:
+            if p1 < p2:
                 return 1
             return 0
         elif op == '==':
-            if p1==p2:
+            if p1 == p2:
                 return 1
             return 0
         elif op == '>=':
@@ -130,7 +146,7 @@ class Pro():
                 return 1
             return 0
         elif op == '!=':
-            if p1!=p2:
+            if p1 != p2:
                 return 1
             return 0
 
@@ -184,9 +200,7 @@ class Pro():
         self.seq_num += 1
         return t0
 
-
-
-    def _err(self, line= None, need = None, now = None):
+    def _err(self, line=None, need=None, now=None):
         raise (MyException(line,need,now))
 
     def _S(self):
@@ -277,12 +291,12 @@ class Pro():
                     self.getNextch()
                     self._D()
                     self.seq_list.append(Sequence(action='j',result=label2))
-                    self.seq_num+= 1
+                    self.seq_num += 1
                     label1.value = self.seq_num
                     self._Q()
                     label2.value = self.seq_num
                 else:
-                    self._err
+                    self._err()
             else:
                 self._err()
         else:
@@ -312,7 +326,7 @@ class Pro():
                     self.seq_num += 1
                     self._D()
                     self.seq_list.append(Sequence(action='j',result=label1))
-                    self.seq_num+= 1
+                    self.seq_num += 1
                     label2.value = self.seq_num
                 else:
                     self._err()
@@ -338,19 +352,19 @@ class Pro():
                     if self.ch.symbol == 'l':
                         self.getNextch()
                         self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label2))
-                        self.seq_num+= 1
+                        self.seq_num += 1
                         self.seq_list.append(Sequence(action='j',result=label3))
-                        self.seq_num+= 1
+                        self.seq_num += 1
                         label4.value = self.seq_num
                         self._K()
                         self.seq_list.append(Sequence(action='j',result=label1))
-                        self.seq_num+= 1
+                        self.seq_num += 1
                         if self.ch.symbol == 'k':
                             self.getNextch()
                             label3.value = self.seq_num
                             self._D()
                             self.seq_list.append(Sequence(action='j',result=label4))
-                            self.seq_num+= 1
+                            self.seq_num += 1
                             label2.value = self.seq_num
                         else:
                             self._err()
@@ -562,9 +576,3 @@ class Pro():
             return p
         else:
             self._err()
-
-
-
-
-
-
