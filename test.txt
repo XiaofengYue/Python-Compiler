@@ -1,9 +1,22 @@
 {
+    int a;
+    int b;
     int c;
-    int i;
-    for(i = 0 ; i == 10 ; i=i+1)
+    int d;
+    int res;
+    if(a == b)
+    {
+        for(a = 0 ; a < 10 ; a = a + 1)
+        {
+            c = c + 1;
+            while(c>d)
+            {
+                c = c + 1;
+            }
+        }
+    }
+    else
     {
         c = c + 1;
     }
-    
 }
