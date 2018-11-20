@@ -4,21 +4,32 @@ class NewT():
         self.value = value
         self.name = 'T' + str(newT_num)
         newT_num += 1
+    def __str__(self):
+        return self.name
+    def __repr__(self):
+        return '\nname:{:10}value:{:5}'.format(self.name,self.value)
+    def isdigit(self):
+        return False
 
 class label():
     def __init__(self, value=None):
         self.value = value
+    def __repr__(self):
+        return str(self.value)
+    def __str__(self):
+        return str(self.value)
 
 class Sequence():
-    def __init__(self,action,p1= None,p2 = None,result=None):
+    def __init__(self,action,p1= '_',p2 = '_',result=None):
         self.action = action
         self.p1 = p1
         self.p2 = p2
         self.result = result
     def __str__(self):
-        return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        return '{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
     def __repr__(self):
-        return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        # return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        return '{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
 
 class element():
     def __init__(self, symbol, value, line, type=None):
@@ -68,6 +79,7 @@ class Pro():
         self.seq_num = 0
         global newT_num
         newT_num = 0
+        self.temp_list = list()
 
     def analysis(self, filename):
         # 读取规则获得rule表
@@ -88,6 +100,92 @@ class Pro():
     def getNextch(self):
         self.ch = self.list.pop(0)
 
+    def _op(self,op,p1,p2):
+        if op == '+':
+            return p1 + p2
+        elif op == '-':
+            return p1 - p2
+        elif op == '*':
+            return p1 * p2
+        elif op == '/':
+            return p1 // p2
+        elif op == '>':
+            if p1>p2:
+                return 1
+            return 0
+        elif op == '<':
+            if p1<p2:
+                return 1
+            return 0
+        elif op == '==':
+            if p1==p2:
+                return 1
+            return 0
+        elif op == '>=':
+            if p1 >= p2:
+                return 1
+            return 0
+        elif op == '<=':
+            if p1 <= p2:
+                return 1
+            return 0
+        elif op == '!=':
+            if p1!=p2:
+                return 1
+            return 0
+
+    def __VALUE(self,op,p1,p2):
+        p1_t = 0
+        p2_t = 0
+        t0 = 0
+        if isinstance(p1,NewT):
+            p1_t = p1.value
+        elif isinstance(p1,int):
+            p1_t = p1
+        else:
+            p1_t = self.chart[p1]
+        if isinstance(p2,NewT):
+            p2_t = p2.value
+        elif isinstance(p2,int):
+            p2_t = p2
+        else:
+            p2_t = self.chart[p2]
+        if isinstance(p1,int) and isinstance(p2,int):
+            t0 = self._op(op,p1_t,p2_t)
+        else:
+            t0 = NewT(self._op(op,p1_t,p2_t))
+            self.temp_list.append(t0)
+        self.seq_list.append(Sequence(action=op,p1=p1,p2=p2,result=t0))
+        self.seq_num += 1
+        return t0
+
+    def __THAN(self,op,p1,p2):
+        p1_t = 0
+        p2_t = 0
+        t0 = 0
+        if isinstance(p1,NewT):
+            p1_t = p1.value
+        elif isinstance(p1,int):
+            p1_t = p1
+        else:
+            p1_t = self.chart[p1]
+        if isinstance(p2,NewT):
+            p2_t = p2.value
+        elif isinstance(p2,int):
+            p2_t = p2
+        else:
+            p2_t = self.chart[p2]
+        if isinstance(p1,int) and isinstance(p2,int):
+            t0 = self._op(op,p1_t,p2_t)
+        else:
+            t0 = NewT(self._op(op,p1_t,p2_t))
+            self.temp_list.append(t0)
+        self.seq_list.append(Sequence(action=op,p1=p1,p2=p2,result=t0))
+        self.seq_num += 1
+        return t0
+
+
+
     def _err(self, line= None, need = None, now = None):
         raise (MyException(line,need,now))
 
@@ -100,7 +198,10 @@ class Pro():
                 print('识别成功')
                 print('符号表\n' + str(self.chart))
                 print('序列表: 数量是='+str(self.seq_num))
-                print(self.seq_list)
+                print('临时变量表')
+                print(self.temp_list)
+                for i,seq in enumerate(self.seq_list):
+                    print('行号:{}[{}]'.format(i,seq))
             else:
                 self._err()
         else:
@@ -167,11 +268,19 @@ class Pro():
             self.getNextch()
             if self.ch.symbol == 'j':
                 self.getNextch()
-                self._M()
+                r = self._M()
                 if self.ch.symbol == 'k':
+                    label1 = label()
+                    label2 = label()
+                    self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label1))
+                    self.seq_num += 1
                     self.getNextch()
                     self._D()
+                    self.seq_list.append(Sequence(action='j',result=label2))
+                    self.seq_num+= 1
+                    label1.value = self.seq_num
                     self._Q()
+                    label2.value = self.seq_num
                 else:
                     self._err
             else:
@@ -190,13 +299,21 @@ class Pro():
 
     def _F(self):
         if self.ch.symbol == 'f':
+            label1 = label()
+            label2 = label()
             self.getNextch()
+            label1.value = self.seq_num
             if self.ch.symbol == 'j':
                 self.getNextch()
-                self._M()
+                r = self._M()
                 if self.ch.symbol == 'k':
                     self.getNextch()
+                    self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label2))
+                    self.seq_num += 1
                     self._D()
+                    self.seq_list.append(Sequence(action='j',result=label1))
+                    self.seq_num+= 1
+                    label2.value = self.seq_num
                 else:
                     self._err()
             else:
@@ -207,17 +324,34 @@ class Pro():
     def _G(self):
         if self.ch.symbol == 'e':
             self.getNextch()
+            label1 = label()
+            label2 = label()
+            label3 = label()
+            label4 = label()
             if self.ch.symbol == 'j':
                 self.getNextch()
                 self._K()
                 if self.ch.symbol == 'l':
                     self.getNextch()
-                    self._M()
+                    label1.value = self.seq_num
+                    r = self._M()
                     if self.ch.symbol == 'l':
                         self.getNextch()
+                        self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label2))
+                        self.seq_num+= 1
+                        self.seq_list.append(Sequence(action='j',result=label3))
+                        self.seq_num+= 1
+                        label4.value = self.seq_num
                         self._K()
+                        self.seq_list.append(Sequence(action='j',result=label1))
+                        self.seq_num+= 1
                         if self.ch.symbol == 'k':
+                            self.getNextch()
+                            label3.value = self.seq_num
                             self._D()
+                            self.seq_list.append(Sequence(action='j',result=label4))
+                            self.seq_num+= 1
+                            label2.value = self.seq_num
                         else:
                             self._err()
                     else:
@@ -271,10 +405,13 @@ class Pro():
             self.getNextch()
             if self.ch.symbol == 't':
                 self.getNextch()
-                value = self._N()
+                t = self._N()
+                value = t
+                if isinstance(value,NewT):
+                    value = t.value
                 if name in self.chart:
                     self.chart[name] = value
-                    self.seq_list.append(Sequence(action='=',p1=value,result=name))
+                    self.seq_list.append(Sequence(action='=',p1=t,result=name))
                     self.seq_num += 1
                 else:
                     self._err()
@@ -295,30 +432,43 @@ class Pro():
 
     def _M(self):
         if self.FIRST('N',self.ch.symbol):
-            self._N()
-            self._R()
+            r = self._N()
+            t = self._R(r)
+            return t
         else:
             self._err()
 
-    def _R(self):
+    def _R(self,r):
         if self.ch.symbol == 'u':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('>',r,p)
+            return t
         elif self.ch.symbol == 'v':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('<',r,p)
+            return t
         elif self.ch.symbol == 'w':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('>=',r,p)
+            return t
         elif self.ch.symbol == 'x':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('<=',r,p)
+            return t
         elif self.ch.symbol == 'z':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('==',r,p)
+            return t
         elif self.ch.symbol == 'y':
             self.getNextch()
-            self._N()
+            p = self._N()
+            t = self.__VALUE('!=',r,p)
+            return t
         else:
             self._err()
 
@@ -326,7 +476,6 @@ class Pro():
         if self.FIRST('O',self.ch.symbol):
             p = self._O()
             t = self._T(p)
-            print('N返回了一个\t' + str(t) )
             return t
         else:
             self._err()
@@ -335,19 +484,21 @@ class Pro():
         if self.ch.symbol == 'p':
             self.getNextch()
             r = self._O()
-            t0 = p + r
-            print ('加法操作' + str(p) + '+' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='+',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('+',p,r)
+            # t0 = p + r
+            # print ('加法操作' + str(p) + '+' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='+',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._T(t0)
             return t
         elif self.ch.symbol == 'q':
             self.getNextch()
             r = self._O()
-            t0 = p - r
-            print ('减法操作' + str(p) + '-' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='-',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('-',p,r)
+            # t0 = p - r
+            # print ('减法操作' + str(p) + '-' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='-',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._T(t0)
             return t
         elif self.FOLLOW('T',self.ch.symbol):
@@ -368,19 +519,21 @@ class Pro():
         if self.ch.symbol == 'r':
             self.getNextch()
             r = self._P()
-            t0 = p * r
-            print ('乘法操作' + str(p) + '*' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='*',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('*',p,r)
+            # t0 = p * r
+            # print ('乘法操作' + str(p) + '*' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='*',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._U(t0)
             return t
         elif self.ch.symbol == 's':
             self.getNextch()
             r = self._P()
-            t0 = p//r
-            print ('除法操作' + str(p) + '/' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='/',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('/',p,r)
+            # t0 = p//r
+            # print ('除法操作' + str(p) + '/' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='/',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._U(t0)
             return t
         elif self.FOLLOW('U',self.ch.symbol):
@@ -404,7 +557,7 @@ class Pro():
             self.getNextch()
             return p
         elif self.ch.symbol == 'b':
-            p = int(self.chart[self.ch.value])
+            p = self.ch.value
             self.getNextch()
             return p
         else:

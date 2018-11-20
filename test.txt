@@ -4,6 +4,19 @@
     int c;
     int d;
     int res;
-
-    res = a-b-c-d;
+    if(a == b)
+    {
+        for(a = 0 ; a < 10 ; a = a + 1)
+        {
+            c = c + 1;
+            while(c>d)
+            {
+                c = c + 1;
+            }
+        }
+    }
+    else
+    {
+        c = c + 1;
+    }
 }
