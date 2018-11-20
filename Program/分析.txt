@@ -5,3 +5,6 @@ O↑t→        P↑p                          U↓p↑t
 U↓p↑t→*     P↑r @MULT↓p,r,t0             U↓t0↑t           t0 = NEWT 
 U↓p↑t→ε                                              t = p
 P↑p →(N↑p) | ID↑p 
+
+
+

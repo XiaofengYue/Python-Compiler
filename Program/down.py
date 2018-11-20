@@ -20,7 +20,6 @@ class Sequence():
     def __repr__(self):
         return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
 
-
 class element():
     def __init__(self, symbol, value, line, type=None):
         self.symbol = symbol
