@@ -1,21 +1,9 @@
 {
-    int a;
-    int b;
     int c;
-    a = 3;
-    b = 3;
-    if(a>b)
+    int i;
+    for(i = 0 ; i == 10 ; i=i+1)
     {
         c = c + 1;
-        if(a==b)
-        {
-        c = c + 1;
-        }
-        else{
-        c = c + 1;
-    }
     }
     
-
-
 }

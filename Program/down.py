@@ -300,13 +300,21 @@ class Pro():
 
     def _F(self):
         if self.ch.symbol == 'f':
+            label1 = label()
+            label2 = label()
             self.getNextch()
+            label1.value = self.seq_num
             if self.ch.symbol == 'j':
                 self.getNextch()
-                self._M()
+                r = self._M()
                 if self.ch.symbol == 'k':
                     self.getNextch()
+                    self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label2))
+                    self.seq_num += 1
                     self._D()
+                    self.seq_list.append(Sequence(action='j',result=label1))
+                    self.seq_num+= 1
+                    label2.value = self.seq_num
                 else:
                     self._err()
             else:
@@ -317,17 +325,34 @@ class Pro():
     def _G(self):
         if self.ch.symbol == 'e':
             self.getNextch()
+            label1 = label()
+            label2 = label()
+            label3 = label()
+            label4 = label()
             if self.ch.symbol == 'j':
                 self.getNextch()
                 self._K()
                 if self.ch.symbol == 'l':
                     self.getNextch()
-                    self._M()
+                    label1.value = self.seq_num
+                    r = self._M()
                     if self.ch.symbol == 'l':
                         self.getNextch()
+                        self.seq_list.append(Sequence(action='j=',p1=0,p2=r,result=label2))
+                        self.seq_num+= 1
+                        self.seq_list.append(Sequence(action='j',result=label3))
+                        self.seq_num+= 1
+                        label4.value = self.seq_num
                         self._K()
+                        self.seq_list.append(Sequence(action='j',result=label1))
+                        self.seq_num+= 1
                         if self.ch.symbol == 'k':
+                            self.getNextch()
+                            label3.value = self.seq_num
                             self._D()
+                            self.seq_list.append(Sequence(action='j',result=label4))
+                            self.seq_num+= 1
+                            label2.value = self.seq_num
                         else:
                             self._err()
                     else:
