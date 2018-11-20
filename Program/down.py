@@ -1,3 +1,10 @@
+class NewT():
+    def __init__(self,value):
+        global newT_num
+        self.value = value
+        self.name = 'T' + str(newT_num)
+        newT_num += 1
+
 class label():
     def __init__(self, value=None):
         self.value = value
@@ -27,7 +34,13 @@ class element():
     def __repr__(self):
         return '\n符号:' + self.symbol + '\t值:' + self.value + '\t行数:' + str(self.line) + '\t类型:' + self.type
 
-
+class MyException(Exception):
+    def __init__(self,line,need,now):
+        err = 'Line {} is not legal Expected {} Before {}'.format(line,now,need)
+        Exception.__init__(self,err)
+        self.line = line
+        self.need = need
+        self.now = now
 
 class Pro():
     def __readRules(self,filename):
@@ -54,6 +67,8 @@ class Pro():
         self.chart = dict()
         self.seq_list = list()
         self.seq_num = 0
+        global newT_num
+        newT_num = 0
 
     def analysis(self, filename):
         # 读取规则获得rule表
@@ -74,9 +89,8 @@ class Pro():
     def getNextch(self):
         self.ch = self.list.pop(0)
 
-    def _err(self):
-        print('error')
-        raise Exception
+    def _err(self, line= None, need = None, now = None):
+        raise (MyException(line,need,now))
 
     def _S(self):
         if self.ch.symbol == 'm':
@@ -111,7 +125,7 @@ class Pro():
                 name = self.ch.value
                 self.getNextch()
                 if self.ch.symbol == 'l':
-                    self.chart[name] = ''
+                    self.chart[name] = 0
                     self.getNextch()
                 else:
                     self._err()
@@ -364,7 +378,7 @@ class Pro():
         elif self.ch.symbol == 's':
             self.getNextch()
             r = self._P()
-            t0 = p/r
+            t0 = p//r
             print ('除法操作' + str(p) + '/' + str(r) +  '=' + str(t0))
             self.seq_list.append(Sequence(action='/',p1=p,p2=r,result=t0))
             self.seq_num += 1
