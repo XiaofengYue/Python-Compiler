@@ -4,21 +4,28 @@ class NewT():
         self.value = value
         self.name = 'T' + str(newT_num)
         newT_num += 1
+    def __str__(self):
+        return self.name
+    def __repr__(self):
+        return '\nname:{:10}value:{:5}'.format(self.name,self.value)
+    def isdigit(self):
+        return False
 
 class label():
     def __init__(self, value=None):
         self.value = value
 
 class Sequence():
-    def __init__(self,action,p1= None,p2 = None,result=None):
+    def __init__(self,action,p1= '_',p2 = '_',result='_'):
         self.action = action
         self.p1 = p1
         self.p2 = p2
         self.result = result
     def __str__(self):
-        return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        return '\n{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
     def __repr__(self):
-        return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        # return '\n:  ' +str(self.action) +  '  p1:  ' + str(self.p1) + '  p2  ' + str(self.p2) + '    ' + str(self.result)
+        return '\n{:5}{:10}{:10}{:10}'.format(str(self.action),str(self.p1),str(self.p2),str(self.result))
 
 
 class element():
@@ -69,6 +76,7 @@ class Pro():
         self.seq_num = 0
         global newT_num
         newT_num = 0
+        self.temp_list = list()
 
     def analysis(self, filename):
         # 读取规则获得rule表
@@ -89,6 +97,41 @@ class Pro():
     def getNextch(self):
         self.ch = self.list.pop(0)
 
+    def _op(self,op,p1,p2):
+        if op == '+':
+            return p1 + p2
+        elif op == '-':
+            return p1 - p2
+        elif op == '*':
+            return p1 * p2
+        elif op == '/':
+            return p1 // p2
+
+    def __VALUE(self,op,p1,p2):
+        p1_t = 0
+        p2_t = 0
+        t0 = 0
+        if isinstance(p1,NewT):
+            p1_t = p1.value
+        elif p1.isdigit():
+            p1_t = p1
+        else:
+            p1_t = self.chart[p1]
+        if isinstance(p2,NewT):
+            p2_t = p2.value
+        elif p2.isdigit():
+            p2_t = p2
+        else:
+            p2_t = self.chart[p2]
+        if p1.isdigit() and p2.isdigit():
+            t0 = self._op(op,p1_t,p2_t)
+        else:
+            t0 = NewT(self._op(op,p1_t,p2_t))
+        self.seq_list.append(Sequence(action=op,p1=p1,p2=p2,result=t0))
+        self.seq_num += 1
+        self.temp_list.append(t0)
+        return t0
+
     def _err(self, line= None, need = None, now = None):
         raise (MyException(line,need,now))
 
@@ -101,6 +144,8 @@ class Pro():
                 print('识别成功')
                 print('符号表\n' + str(self.chart))
                 print('序列表: 数量是='+str(self.seq_num))
+                print('临时变量表')
+                print(self.temp_list)
                 print(self.seq_list)
             else:
                 self._err()
@@ -336,19 +381,21 @@ class Pro():
         if self.ch.symbol == 'p':
             self.getNextch()
             r = self._O()
-            t0 = p + r
-            print ('加法操作' + str(p) + '+' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='+',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('+',p,r)
+            # t0 = p + r
+            # print ('加法操作' + str(p) + '+' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='+',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._T(t0)
             return t
         elif self.ch.symbol == 'q':
             self.getNextch()
             r = self._O()
-            t0 = p - r
-            print ('减法操作' + str(p) + '-' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='-',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('-',p,r)
+            # t0 = p - r
+            # print ('减法操作' + str(p) + '-' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='-',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._T(t0)
             return t
         elif self.FOLLOW('T',self.ch.symbol):
@@ -369,19 +416,21 @@ class Pro():
         if self.ch.symbol == 'r':
             self.getNextch()
             r = self._P()
-            t0 = p * r
-            print ('乘法操作' + str(p) + '*' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='*',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('*',p,r)
+            # t0 = p * r
+            # print ('乘法操作' + str(p) + '*' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='*',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._U(t0)
             return t
         elif self.ch.symbol == 's':
             self.getNextch()
             r = self._P()
-            t0 = p//r
-            print ('除法操作' + str(p) + '/' + str(r) +  '=' + str(t0))
-            self.seq_list.append(Sequence(action='/',p1=p,p2=r,result=t0))
-            self.seq_num += 1
+            t0 = self.__VALUE('/',p,r)
+            # t0 = p//r
+            # print ('除法操作' + str(p) + '/' + str(r) +  '=' + str(t0))
+            # self.seq_list.append(Sequence(action='/',p1=p,p2=r,result=t0))
+            # self.seq_num += 1
             t = self._U(t0)
             return t
         elif self.FOLLOW('U',self.ch.symbol):
@@ -405,7 +454,7 @@ class Pro():
             self.getNextch()
             return p
         elif self.ch.symbol == 'b':
-            p = int(self.chart[self.ch.value])
+            p = self.ch.value
             self.getNextch()
             return p
         else:
