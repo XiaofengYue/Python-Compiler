@@ -2,12 +2,20 @@
     int a;
     int b;
     int c;
-    int d;
-    int res;
-    a = 5;
-    b = 5;
-    c = 3;
-    d = 1;
+    a = 3;
+    b = 3;
+    if(a>b)
+    {
+        c = c + 1;
+        if(a==b)
+        {
+        c = c + 1;
+        }
+        else{
+        c = c + 1;
+    }
+    }
+    
 
-    res = (a*b) + (c/d) -a;
+
 }
