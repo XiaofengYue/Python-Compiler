@@ -118,4 +118,19 @@ n	}
         }
         */
 n	}
+h	write
+b	a
+l	;
+h	write
+b	b
+l	;
+h	write
+b	c
+l	;
+h	write
+b	d
+l	;
+h	write
+b	i
+l	;
 n	}

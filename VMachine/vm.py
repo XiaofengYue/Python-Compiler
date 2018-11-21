@@ -55,9 +55,9 @@ def _op(op, P1, P2):
 def VM(chart,newT,sequence):
     global p
     p = Pro()
-    p.chart = chart
-    p.temp_list = newT
-    p.seq_list = sequence
+    p.chart = chart  # 符号表  类型：dict
+    p.temp_list = newT  # 临时变量表  类型：NewT
+    p.seq_list = sequence  # 四元式表  类型：Sequence
     # 测试使用，将符号表与临时变量表的value置为0
     for i in p.chart.keys():
         p.chart[i] = 0
@@ -84,6 +84,17 @@ def VM(chart,newT,sequence):
                 index += 1
         elif item.action == 'j':
             index = item.result.value
+        elif item.action == 'out':
+            index += 1
+            t = find_value(item.p1)
+            print('输出：',t)
+        elif item.action == 'in':
+            index += 1
+            if item.p1 in p.chart:
+                t = eval(input('输入：'))
+                p.chart[item.p1] = t
+            else:
+                print("变量未定义")
         else:
             index += 1
             if item.result in p.chart:
@@ -93,9 +104,9 @@ def VM(chart,newT,sequence):
                     if t.name == str(item.result):
                         p.temp_list[i].value = _op(item.action, item.p1, item.p2)
 
-    print('将抽象机结果赋给了符号表与临时变量表')
-    print(p.chart)
-    print(p.temp_list)
+    # print('将抽象机结果赋给了符号表与临时变量表')
+    # print(p.chart)
+    # print(p.temp_list)
 
 
 if __name__ == '__main__':
