@@ -1,25 +1,22 @@
 from Program.down import Pro
 
 
+def find_value(name):
+    value = 0
+    if name in p.temp_list:
+        for i, t in enumerate(p.temp_list):
+            if t.name == str(name):
+                value = t.value
+    elif name in p.chart:
+        value = p.chart[name]
+    else:
+        value = int(name)
+    return value
+
+
 def _op(op, P1, P2):
-    p1 = 0
-    p2 = 0
-    if P1 in p.temp_list:
-        for i, t in enumerate(p.temp_list):
-            if t.name == str(P1):
-                p1 = t.value
-    elif P1 in p.chart:
-        p1 = p.chart[P1]
-    else:
-        p1 = int(P1)
-    if P2 in p.temp_list:
-        for i, t in enumerate(p.temp_list):
-            if t.name == str(P2):
-                p2 = t.value
-    elif P2 in p.chart:
-        p2 = p.chart[P2]
-    else:
-        p2 = int(P2)
+    p1 = find_value(P1)
+    p2 = find_value(P2)
 
     if op == '+':
         return p1 + p2
@@ -69,8 +66,7 @@ def VM(chart,newT,sequence):
 
     print('-------------------------------------')
     index = 0
-    print(type(index))
-    while index != len(p.seq_list):
+    while index < len(p.seq_list):
         item = p.seq_list[int(index)]
         if item.action == '=':
             index += 1
@@ -80,7 +76,13 @@ def VM(chart,newT,sequence):
                         p.chart[item.result] = p.temp_list[i].value
             else:
                 p.chart[item.result] = item.p1
-        elif item.action == 'j=' or item.action == 'j':
+        elif item.action == 'j=':
+            flag = find_value(item.p2)
+            if flag == item.p1:
+                index = item.result.value
+            else:
+                index += 1
+        elif item.action == 'j':
             index = item.result.value
         else:
             index += 1
@@ -91,8 +93,7 @@ def VM(chart,newT,sequence):
                     if t.name == str(item.result):
                         p.temp_list[i].value = _op(item.action, item.p1, item.p2)
 
-
-    print('测试抽象机是否将值赋给了符号表与临时变量表')
+    print('将抽象机结果赋给了符号表与临时变量表')
     print(p.chart)
     print(p.temp_list)
 
