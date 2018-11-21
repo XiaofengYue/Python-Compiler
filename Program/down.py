@@ -1,3 +1,4 @@
+import os
 class NewT():
     def __init__(self,value):
         global newT_num
@@ -86,7 +87,7 @@ class Pro():
         self.list = []
         for i,ch in enumerate(input_str):
             self.list.append(element(ch,map_list[i],map_line[i]))
-        print(self.list)
+        # print(self.list)
         # 符号表
         self.chart = dict()
         # 四元式表
@@ -115,6 +116,23 @@ class Pro():
 
     def getNextch(self):
         self.ch = self.list.pop(0)
+
+    def _Write(self):
+        if os.path.exists('Sequence.txt'):
+            os.remove('Sequence.txt')
+        with open('Sequence.txt','a+') as f:
+            for i,seq in enumerate(self.seq_list):
+                f.write('行号:{:2}[{}]\n'.format(i,seq))
+
+        if os.path.exists('Parameters.txt'):
+            os.remove('Parameters.txt')
+        with open('Parameters.txt','a+') as f:
+            for i in self.chart.keys():
+                f.write('name:{:2}  value:0\n'.format(i))
+            for i in self.temp_list:
+                f.write('name:{:2}  value:0\n'.format(i.name))
+
+
 
     def _op(self,op,p1,p2):
         if op == '+':
@@ -210,12 +228,11 @@ class Pro():
             self._C()
             if self.ch.symbol == 'n':
                 print('识别成功')
-                print('符号表\n' + str(self.chart))
-                print('序列表: 数量是='+str(self.seq_num))
-                print('临时变量表')
-                print(self.temp_list)
-                for i,seq in enumerate(self.seq_list):
-                    print('行号:{}[{}]'.format(i,seq))
+                # print('符号表\n' + str(self.chart))
+                # print('临时变量表')
+                # print(self.temp_list)
+                # print('序列表: 数量是:'+str(self.seq_num))
+                self._Write()
             else:
                 self._err()
         else:
