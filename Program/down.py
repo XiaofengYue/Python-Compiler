@@ -15,7 +15,6 @@ class NewT():
     def isdigit(self):
         return False
 
-
 class label():
     def __init__(self, value=None):
         self.value = value
@@ -26,9 +25,8 @@ class label():
     def __str__(self):
         return str(self.value)
 
-
 class Sequence():
-    def __init__(self,action,p1='_',p2='_',result=None):
+    def __init__(self,action,p1='_',p2='_',result='_'):
         self.action = action
         self.p1 = p1
         self.p2 = p2
@@ -132,8 +130,6 @@ class Pro():
             for i in self.temp_list:
                 f.write('name:{:2}  value:0\n'.format(i.name))
 
-
-
     def _op(self,op,p1,p2):
         if op == '+':
             return p1 + p2
@@ -167,6 +163,7 @@ class Pro():
             if p1 != p2:
                 return 1
             return 0
+
 
     def __VALUE(self,op,p1,p2):
         p1_t = 0
@@ -397,8 +394,10 @@ class Pro():
     def _H(self):
         if self.ch.symbol == 'h':
             self.getNextch()
-            self._N()
+            t = self._N()
             if self.ch.symbol == 'l':
+                self.seq_list.append(Sequence(action='out',p1=t))
+                self.seq_num += 1
                 self.getNextch()
             else:
                 self._err()
@@ -409,8 +408,11 @@ class Pro():
         if self.ch.symbol == 'i':
             self.getNextch()
             if self.ch.symbol == 'b':
+                name = self.ch.value
                 self.getNextch()
                 if self.ch.symbol == 'l':
+                    self.seq_list.append(Sequence(action='in',p1=name))
+                    self.seq_num += 1
                     self.getNextch()
                 else:
                     self._err()
@@ -418,6 +420,7 @@ class Pro():
                 self._err()
         else:
             self._err()
+
 
     def _J(self):
         if self.ch.symbol == 'm':

@@ -2,6 +2,8 @@ name:a   value:0
 name:b   value:0
 name:c   value:0
 name:i   value:0
+name:d   value:0
+name:e   value:0
 name:T0  value:0
 name:T1  value:0
 name:T2  value:0
@@ -10,3 +12,9 @@ name:T4  value:0
 name:T5  value:0
 name:T6  value:0
 name:T7  value:0
+name:T8  value:0
+name:T9  value:0
+name:T10  value:0
+name:T11  value:0
+name:T12  value:0
+name:T13  value:0

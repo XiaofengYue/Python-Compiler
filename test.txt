@@ -3,9 +3,14 @@
     int b;
     int c;
     int i;
+    int d;
+    int e;
+    read e;
+    write e;
     a = 1;
     b = 2;
     c = a + b;
+    d = (a+b-c+b) * (a*b+a);
     for(i = 1;i<5;i=i+1)
     {
         if(a<3)
@@ -19,5 +24,11 @@
         {
             c = c - 1;
         }
+        /*
+        while(a>b)
+        {
+            a = a - 1;
+        }
+        */
     }
 }
