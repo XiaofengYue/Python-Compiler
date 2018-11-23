@@ -153,7 +153,7 @@ P <factor>
 @MULT： 返回p1*p2
 @DIV： 返回p1/p2
 ```
-### 添加属性
+### 构造属性翻译文法
 ```
 1) <program> → {<declaration_list><statement_list>}
 2) <declaration_list> → <declaration_list><declaration_stat> | ε
@@ -201,7 +201,7 @@ P <factor>
                  NUM↑i@LOADI↓i
 
 ```
-### 符号化的属性文法
+### 符号化的属性翻译文法
 ```
 3） B↑n →   g b↑n@name-def↓n l  
 6） E   →   c j M↑r k @BRF↓'j',0,_ ,↑label1D@BR↓'j',_,_ ,↑label2   @SETlabel↓label1  Q@SETlabel↓label2
