@@ -1,39 +1,7 @@
 {
+    /*这个是你自己编写的符合test文法的程序*/
+    /* 先写一个简单的看下变化*/
     int a;
-    int b;
-    int c;
-    int i;
-    int d;
-    int e;
-    read e;
-    write e;
-    a = 1;
-    b = 2;
-    c = a + b;
-    d = (a+b-c+b) * (a*b+a);
-    for(i = 1;i<5;i=i+1)
-    {
-        if(a<3)
-        {
-            a = a + 1;
-        }
-        if(b<a)
-        {
-            c = c + 1;
-        }else
-        {
-            c = c - 1;
-        }
-        /*
-        while(a>b)
-        {
-            a = a - 1;
-        }
-        */
-    }
+    a = (10+170+170*170+170*170*170)*512;
     write a;
-    write b;
-    write c;
-    write d;
-    write i;
 }
